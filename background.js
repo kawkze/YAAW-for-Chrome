@@ -265,7 +265,7 @@ chrome.webRequest.onHeadersReceived.addListener(function(details){
 },{urls: ["<all_urls>"]}, ["blocking","responseHeaders"]);
 */
 chrome.browserAction.onClicked.addListener(function() {
-    var index = chrome.extension.getURL('yaaw/index.html');
+    var index = chrome.extension.getURL('webui/index.html');
     chrome.tabs.getAllInWindow(undefined, function(tabs) {
         for (var i = 0, tab; tab = tabs[i]; i++) {
             if (tab.url && tab.url == index) {

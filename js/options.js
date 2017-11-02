@@ -15,8 +15,12 @@ $(function(){
                 $("#fileSize").val(fileSize);
                 var rpc_list=JSON.parse(localStorage.getItem("rpc_list")||'[{"name":"ARIA2 RPC","url":"http://localhost:6800/jsonrpc"}]');
                 for(var i in rpc_list){
-                    var addBtn=0==i?'<button class="btn" id="add-rpc">Add RPC</button>':'';
-                    var row='<div class="control-group rpc_list"><label class="control-label">JSON-RPC</label><div class="controls"><input type="text" class="input-small" value="'+rpc_list[i]['name']+'" placeholder="RPC Name"><input type="text" class="input-xlarge rpc-path" value="'+rpc_list[i]['url']+'" placeholder="RPC Path">'+addBtn+'</div></div>';
+                    var addBtn=0==i?'<button class="btn btn-success" id="add-rpc">Add RPC</button>':'';
+                    var row='<div class="controls"><input type="text" class="input-small" value="'+rpc_list[i]['name']+'" placeholder="RPC Name"><input type="text" class="input-xlarge rpc-path" value="'+rpc_list[i]['url']+'" placeholder="RPC Path" style="width: 305px;">'+addBtn+'</div></div>';
+                    if(i == 0)
+                        row = '<div class="control-group rpc_list"><label class="control-label">JSON-RPC</label>' + row
+                    else
+                        row = '<div class="control-group rpc_list">' + row
                     if($(".rpc_list").length>0){
                         $(row).insertAfter($(".rpc_list").eq(i-1));
                     }else{
@@ -26,8 +30,12 @@ $(function(){
                 console.log($(".rpc_list"));
                 var permission_list=JSON.parse(localStorage.getItem("permission_list")||'[{"usermane":"","password":"","url":""}]');
                 for(var i in permission_list){
-                    var addBtn=0==i?'<button class="btn" id="add-permission">Add Permission</button>':'';
-                    var row='<div class="control-group permission_list"><label class="control-label">Aria2c-Permission</label><div class="controls"><input type="text" class="input-small" value="'+permission_list[i]['username']+'" placeholder="UserNames"><input type="text" class="input-small" value="'+permission_list[i]['password']+'" placeholder="Password"><input type="text" class="input-xlarge rpc-path" value="'+permission_list[i]['urlpath']+'" placeholder="UrlPath">'+addBtn+'</div></div>';
+                    var addBtn=0==i?'<button class="btn btn-success" id="add-permission">Add Permission</button>':'';
+                    var row='<div class="controls"><input type="text" class="input-small" value="'+permission_list[i]['username']+'" placeholder="UserNames"><input type="text" class="input-small" value="'+permission_list[i]['password']+'" placeholder="Password"><input type="text" class="input-xlarge rpc-path" value="'+permission_list[i]['urlpath']+'" placeholder="UrlPath">'+addBtn+'</div></div>';
+                    if(i == 0)
+                        row = '<div class="control-group permission_list"><label class="control-label">Aria2c-Permission</label>' + row
+                    else
+                        row = '<div class="control-group permission_list">' + row
                     if($(".permission_list").length>0){
                         $(row).insertAfter($(".permission_list").eq(i-1));
                     }else{
@@ -44,15 +52,13 @@ $(function(){
                 }
                 $("#add-rpc").on("click",function(){
                     var rpc_form='<div class="control-group rpc_list">'+
-                        '<label class="control-label">JSON-RPC</label>'+
                         '<div class="controls">'+
                           '<input type="text" class="input-small"  placeholder="RPC Name">'+
-                          '<input type="text" class="input-xlarge rpc-path"  placeholder="RPC Path"></div></div>';
+                          '<input type="text" class="input-xlarge rpc-path"  placeholder="RPC Path" style="width: 305px;"></div></div>';
                     $(rpc_form).insertAfter($(".rpc_list")[0]);
                 });
                 $("#add-permission").on("click",function(){
                     var permission_form='<div class="control-group permission_list">'+
-                        '<label class="control-label">Aria2c-Permission</label>'+
                         '<div class="controls">'+
                             '<input type="text" class="input-small" placeholder="UserName">'+
                             '<input type="text" class="input-small" placeholder="Password">'+
