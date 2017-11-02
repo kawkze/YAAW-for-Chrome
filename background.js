@@ -1,4 +1,5 @@
 const defaultRPC = '[{"name":"ARIA2 RPC","url":"http://localhost:6800/jsonrpc"}]';
+const defaultPermission = '[{"username":"","password":"","urlpath":""}]';
 var HttpSendRead = function(info) {
     Promise.prototype.done = Promise.prototype.then;
     Promise.prototype.fail = Promise.prototype.catch;
@@ -99,12 +100,19 @@ function aria2Send(link, url, output) {
         header.push("Cookie: " + format_cookies.join("; "));
         header.push("User-Agent: " + navigator.userAgent);
         header.push("Connection: keep-alive");
+        var subLink = link.replace("http://","");
+        console.log(localStorage.getItem("permission_list") || defaultPermission);
+        var permission_list = JSON.parse(localStorage.getItem("permission_list") || defaultPermission);
+        for (var i in permission_list) {
+            if(link.match(permission_list[i]["urlpath"])!=null)
+                subLink = permission_list[i]["username"]+":"+permission_list[i]["password"]+"@"+subLink
+        }
         var rpc_data = {
             "jsonrpc": "2.0",
             "method": "aria2.addUri",
             "id": new Date().getTime(),
             "params": [
-                [link], {
+                ["http://"+subLink], {
                     "header": header
                 }
             ]
